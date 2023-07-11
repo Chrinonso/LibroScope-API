@@ -3,12 +3,15 @@ const app = express();
 require('dotenv').config();
 require('express-async-errors');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+ 
 
 
 
 
 const connectDB = require('./db/connect');
-const authRouter = require('./routes/authRoutes')
+const authRouter = require('./routes/authRoutes');
+const userRouter = require('./routes/userRoutes');
 
 
 
@@ -18,7 +21,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 
 
 
-
+app.use(cookieParser(process.env.JWT_SECRET));
 app.use(express.json());
 app.use(morgan('tiny'));
 
@@ -26,6 +29,7 @@ app.use(morgan('tiny'));
 
 
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/user', userRouter);
 
 
 

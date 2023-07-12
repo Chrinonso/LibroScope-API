@@ -40,6 +40,11 @@ app.get('/',(req,res) => {
     res.send('This is my Homepage')
 });
 
+app.get('/api/v1',(req,res) => {
+    console.log(req.signedCookies);
+    res.send('This is my Homepage');
+});
+
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 

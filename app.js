@@ -13,6 +13,7 @@ const connectDB = require('./db/connect');
 const authRouter = require('./routes/authRoutes');
 const userRouter = require('./routes/userRoutes');
 const movieRouter = require('./routes/movieRoutes');
+const bookRouter = require('./routes/bookRoutes');
 
 
 
@@ -31,6 +32,7 @@ app.use(morgan('tiny'));
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/movie', movieRouter);
+app.use('/api/v1/book', bookRouter);
 
 
 

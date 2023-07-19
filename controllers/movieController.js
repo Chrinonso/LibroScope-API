@@ -25,20 +25,27 @@ const getAllMovies = async (req,res) => {
     res.status(StatusCodes.OK).json({movie, count:movie.length});
 };
 
-// const getSingleMovie = async (req,res) => {
-//     const {id:movieId} = req.params;
+const getAllUserMovies = async (req,res) => {
+    const { title, genre } = req.query;
 
-//     const movies = await Movie.findOne({_id:movieId});
-//     if(!movies) {
-//         throw new CustomError.NotFoundError(`there is no movie with ID ${req.user.userId}`);
-//     }
+    const queryObject = {user:req.user.userId};
 
-//     res.status(StatusCodes.OK).json({ movies });
-// };
+    if(title) {
+        queryObject.title = {$regex:title, $options:'i'}
+    }
+    if(genre) {
+        queryObject.genre = genre;
+    }
+
+    const movie = await Movie.find(queryObject);
+
+    res.status(StatusCodes.OK).json({ movie, count:movie.length });
+};
+
+
 
 const getSingleMovie = async (req,res) => {
     const userId = req.user.userId;
-    console.log('userId',userId);
     
     const {id:movieId} = req.params;
 
@@ -83,6 +90,7 @@ const deleteMovie = async (req,res) => {
 module.exports = {
     createMovie,
     getAllMovies,
+    getAllUserMovies,
     getSingleMovie,
     updateMovie,
     deleteMovie
